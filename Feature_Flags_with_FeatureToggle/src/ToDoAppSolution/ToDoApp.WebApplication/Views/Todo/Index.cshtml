@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ToDoApp.Common.Models.Todo>
+
+@{
+    ViewBag.Title = "To-Dos Overview";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        
+        @if (Model != null && Model.Any(model => model.CompletedFeature().FeatureEnabled))
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+        }
+        <th />
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            @if (item.CompletedFeature().FeatureEnabled)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCompleted)
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new
+                                                 {
+                                                     id = item.Id
+                                                 }) |
+                @Html.ActionLink("Delete", "Delete", new
+                                                     {
+                                                         id = item.Id
+                                                     })
+            </td>
+        </tr>
+    }
+
+</table>

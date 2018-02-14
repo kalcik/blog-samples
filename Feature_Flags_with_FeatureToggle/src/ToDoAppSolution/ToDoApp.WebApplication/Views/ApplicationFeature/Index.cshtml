@@ -1,0 +1,46 @@
+﻿@model IList<ToDoApp.Common.Models.ApplicationFeatureFlag>
+
+
+@{
+    ViewBag.Title = "Application Features Overview";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Update", "ApplicationFeature"))
+{
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsEnabled)
+            </th>
+        </tr>
+
+        @for (var i = 0;  i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => modelItem[i].Id)
+                    @Html.HiddenFor(modelItem => modelItem[i].Name)
+                    @Html.DisplayFor(modelItem => modelItem[i].Name)
+                </td>
+                <td>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(modelItem => modelItem[i].IsEnabled)
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="col-md-10">
+        <input type="submit" value="Save" class="btn btn-default"/>
+    </div>
+}
